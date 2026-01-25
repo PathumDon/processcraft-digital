@@ -1,0 +1,42 @@
+<svg viewBox="70 95 520 110" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(125, 150)">
+    <circle r="50" fill="none" stroke="#2563eb" stroke-width="3"/>
+    
+    <g fill="#2563eb">
+      <rect x="-4" y="-54" width="9" height="10" rx="1"/>
+      <rect x="-4" y="44" width="9" height="10" rx="1"/>
+      <rect x="-54" y="-4" width="10" height="9" ry="1"/>
+      <rect x="44" y="-4" width="10" height="9" ry="1"/>
+      <rect x="28" y="-42" width="9" height="10" rx="1" transform="rotate(45 32 -33)"/>
+      <rect x="28" y="32" width="9" height="10" rx="1" transform="rotate(-45 32 33)"/>
+      <rect x="-38" y="-40" width="10" height="9" rx="1" transform="rotate(-45 -33 -33)"/>
+      <rect x="-38" y="32" width="9" height="10" rx="1" transform="rotate(45 -33 33)"/>
+    </g>
+
+    <circle r="28" fill="#2563eb"/>
+
+    <path d="M -8 -2 L 0 -8 L 8 -2 M 0 -8 L 0 8 M -8 2 L 0 8 L 8 2"
+          stroke="#ffffff" stroke-width="2.5" fill="none"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <g stroke="#2563eb" stroke-width="2" fill="none" opacity="0.3">
+    <circle cx="185" cy="150" r="4" fill="#2563eb"/>
+    <line x1="185" y1="150" x2="225" y2="150"/>
+    <circle cx="225" cy="150" r="4" fill="#2563eb"/>
+  </g>
+
+  <g transform="translate(255, 150)">
+    <text y="0" font-family="Inter,Segoe UI,system-ui,sans-serif"
+          font-size="58" font-weight="700" fill="#1e293b" letter-spacing="-1">
+      Process<tspan fill="#2563eb">Craft</tspan>
+    </text>
+
+    <text x="2" y="35" font-family="Inter,Segoe UI,system-ui,sans-serif"
+          font-size="36" fill="#64748b" letter-spacing="3">
+      DIGITAL
+    </text>
+  </g>
+
+
+</svg>
