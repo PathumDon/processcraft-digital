@@ -11,7 +11,7 @@ export default function ContactPage() {
                         Let's Build Your <span className="text-primary">Roadmap</span>.
                     </h1>
                     <p className="text-lg text-muted max-w-2xl mx-auto">
-                        Answer a few questions to see if we're a good fit. If you qualify, you'll get direct access to our strategy calendar.
+                        Tell us about your project or business goals, and we'll help you find the right digital solution. No obligation, just clear next steps.
                     </p>
                 </div>
 

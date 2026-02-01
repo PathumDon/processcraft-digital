@@ -29,17 +29,16 @@ export function Footer() {
                     <div>
                         <h4 className="font-semibold text-secondary mb-4">Services</h4>
                         <ul className="space-y-3 text-sm text-muted">
-                            <li><Link href="/services" className="hover:text-primary transition-colors">Web Development</Link></li>
-                            <li><Link href="/services" className="hover:text-primary transition-colors">Process Automation</Link></li>
-                            <li><Link href="/services" className="hover:text-primary transition-colors">WhatsApp Business</Link></li>
+                            <li><Link href="/#services" className="hover:text-primary transition-colors">Web Development</Link></li>
+                            <li><Link href="/#services" className="hover:text-primary transition-colors">Process Automation</Link></li>
+                            <li><Link href="/contact?service=whatsapp" className="hover:text-primary transition-colors">WhatsApp Business</Link></li>
                         </ul>
                     </div>
 
                     <div>
                         <h4 className="font-semibold text-secondary mb-4">Company</h4>
                         <ul className="space-y-3 text-sm text-muted">
-                            <li><Link href="/about" className="hover:text-primary transition-colors">About Us</Link></li>
-                            <li><Link href="/portfolio" className="hover:text-primary transition-colors">Case Studies</Link></li>
+                            <li><Link href="/#about" className="hover:text-primary transition-colors">About Us</Link></li>
                             <li><Link href="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
                         </ul>
                     </div>

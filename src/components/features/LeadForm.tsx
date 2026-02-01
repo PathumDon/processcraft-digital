@@ -227,7 +227,7 @@ export function LeadForm() {
         <Card className="max-w-xl mx-auto w-full shadow-xl shadow-blue-900/5 border-blue-100">
             <CardHeader className="bg-gray-50/50 border-b-0 pb-0">
                 <div className="flex items-center justify-between mb-2">
-                    <Badge variant="default">Project Inquiry</Badge>
+                    <Badge variant="default">Get Started</Badge>
                     {currentStep !== 'business-stage' && currentStep !== 'success' && (
                         <button onClick={prevStep} className="text-sm text-muted hover:text-secondary flex items-center gap-1">
                             <ChevronLeft size={14} /> Back

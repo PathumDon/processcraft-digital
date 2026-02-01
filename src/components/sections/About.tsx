@@ -26,7 +26,7 @@ export function About() {
                         <div>
                             <h3 className="text-2xl font-bold text-secondary mb-4">Our Origin Story</h3>
                             <p className="text-muted mb-4 leading-relaxed">
-                                Our founder saw firsthand how many businesses struggle with outdated processes, manual work, and underused digital tools. So we started ProcessCraft Digital to help businesses use the internet, automation, and smart systems to save time, reduce stress, and drive real revenue growth.
+                                Our founder saw firsthand how many businesses in Dubai and across the UAE struggle with outdated processes, manual work, and underused digital tools. So we started ProcessCraft Digital to help local businesses use the internet, automation, and smart systems to save time, reduce stress, and drive real revenue growth.
                             </p>
                             <p className="text-muted leading-relaxed">
                                 We’re a startup agency, but we bring big experience. Our team has over 7 years of hands-on industry experience helping businesses streamline operations, improve processes, boost productivity, and increase efficiency through automation.

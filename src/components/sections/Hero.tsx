@@ -20,12 +20,12 @@ export function Hero() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
               </span>
-              Accepcting New Projects for Q1
+              Accepting New Projects for Q1
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-secondary leading-[1.15] mb-6">
-              Crafting Seamless Business{" "}
-              <span className="text-primary">Solutions</span>.
+              Web Design & Business <br className="hidden lg:block" />
+              <span className="text-primary">Automation for UAE Growth</span>.
             </h1>
 
             <p className="text-lg md:text-xl text-muted leading-relaxed mb-8 max-w-lg">

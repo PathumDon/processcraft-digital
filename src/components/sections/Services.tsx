@@ -35,10 +35,10 @@ export function Services() {
                 <div className="text-center mb-20 animate-in slide-in-from-bottom-4 duration-500">
                     <Badge variant="secondary"><span className="px-2">Our Expertise</span></Badge>
                     <h2 className="text-4xl md:text-5xl font-bold text-secondary mt-6 mb-6">
-                        Digital Solutions for the <span className="text-primary">Modern Business</span>.
+                        Digital Solutions for <span className="text-primary">UAE Businesses</span>.
                     </h2>
                     <p className="text-lg text-muted max-w-2xl mx-auto">
-                        We don't just build websites. We build digital ecosystems that save time, reduce costs, and drive revenue.
+                        Helping Dubai & UAE companies build digital ecosystems that save time, reduce costs, and drive revenue.
                     </p>
                 </div>
 

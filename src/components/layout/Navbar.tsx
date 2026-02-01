@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
@@ -11,6 +11,7 @@ export function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const pathname = usePathname();
+    const router = useRouter();
 
     // Pages with dark headers where navbar should be white initially
     const darkHeaderRoutes = ['/about'];
@@ -20,7 +21,6 @@ export function Navbar() {
     const isTransparent = !scrolled && isDarkHeader;
     const textColorClass = isTransparent ? 'text-white' : 'text-secondary';
     const hoverColorClass = isTransparent ? 'hover:text-blue-200' : 'hover:text-primary';
-    const mutedColorClass = isTransparent ? 'text-blue-100' : 'text-muted';
 
     useEffect(() => {
         const handleScroll = () => {
@@ -71,10 +71,8 @@ export function Navbar() {
                         ))}
                     </div>
                     <div className={`flex items-center gap-4 pl-4 border-l ${isTransparent ? 'border-white/20' : 'border-gray-200'}`}>
-                        <Link href="/contact" className={`text-sm font-medium transition-colors ${mutedColorClass} hover:text-secondary`}>
-                            Login
-                        </Link>
-                        <Button size="sm" onClick={() => window.location.href = '/contact'}>
+                        {/* Login link removed as per audit */}
+                        <Button size="sm" onClick={() => router.push('/contact')}>
                             Book Strategy Call
                         </Button>
                     </div>
@@ -103,7 +101,10 @@ export function Navbar() {
                         </Link>
                     ))}
                     <div className="h-px bg-gray-100 my-1" />
-                    <Button className="w-full" onClick={() => setMobileMenuOpen(false)}>
+                    <Button className="w-full" onClick={() => {
+                        setMobileMenuOpen(false);
+                        router.push('/contact');
+                    }}>
                         Book Strategy Call
                     </Button>
                 </div>
