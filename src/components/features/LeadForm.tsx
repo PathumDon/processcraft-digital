@@ -5,202 +5,230 @@ import { Card, CardHeader, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
-import { ArrowRight, CheckCircle, ChevronLeft, Briefcase, Zap, MessageSquare, Layout } from 'lucide-react';
+import { ChevronLeft, CheckCircle, Mail, Phone, Calendar, Briefcase, Target, Smartphone } from 'lucide-react';
 
-type Step = 'segmentation' | 'pain-point' | 'budget' | 'contact' | 'success-qualified' | 'success-unqualified';
+type Step = 'business-stage' | 'primary-goal' | 'website-complexity' | 'timeline' | 'contact' | 'success';
 
 interface FormData {
-    role: string;
-    bottleneck: string;
-    budget: string;
+    businessStage: string;
+    primaryGoal: string;
+    websiteComplexity: string;
+    timeline: string;
     name: string;
-    email: string;
-    website: string;
+    contactMethod: 'email' | 'whatsapp';
+    contactValue: string;
 }
 
+// --- Step Components ---
+
+interface StepProps {
+    handleSelect: (field: keyof FormData, value: string) => void;
+}
+
+const BusinessStageStep = ({ handleSelect }: StepProps) => (
+    <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
+        <h3 className="text-xl font-bold text-secondary">What stage is your business in?</h3>
+        <div className="grid grid-cols-1 gap-3">
+            {['Just starting (idea / new business)', 'Small business (1–10 employees)', 'Growing business (10–50 employees)', 'Established company'].map((option) => (
+                <button
+                    key={option}
+                    onClick={() => handleSelect('businessStage', option)}
+                    className="w-full text-left p-4 rounded-xl border border-gray-200 hover:border-primary hover:bg-blue-50/50 transition-all font-medium text-secondary hover:text-primary group"
+                >
+                    {option}
+                </button>
+            ))}
+        </div>
+    </div>
+);
+
+const PrimaryGoalStep = ({ handleSelect }: StepProps) => (
+    <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
+        <h3 className="text-xl font-bold text-secondary">What is your primary goal?</h3>
+        <div className="grid grid-cols-1 gap-3">
+            {[
+                { label: 'Online presence / credibility', icon: Briefcase },
+                { label: 'Get more inquiries & leads', icon: Target },
+                { label: 'Sell products or services online', icon: Smartphone },
+                { label: 'Automate processes (forms, CRM, WhatsApp)', icon: CheckCircle },
+                { label: 'Improve internal operations', icon: Calendar }
+            ].map((item) => (
+                <button
+                    key={item.label}
+                    onClick={() => handleSelect('primaryGoal', item.label)}
+                    className="flex items-center gap-3 w-full text-left p-4 rounded-xl border border-gray-200 hover:border-primary hover:bg-blue-50/50 transition-all group"
+                >
+                    <item.icon className="h-5 w-5 text-muted group-hover:text-primary" />
+                    <span className="font-medium text-secondary group-hover:text-primary">{item.label}</span>
+                </button>
+            ))}
+        </div>
+    </div>
+);
+
+const WebsiteComplexityStep = ({ handleSelect }: StepProps) => (
+    <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
+        <h3 className="text-xl font-bold text-secondary">What do you think you need?</h3>
+        <div className="grid grid-cols-1 gap-3">
+            {['Simple one-page website', 'Standard business website (5–7 pages)', 'Website with forms & integrations', 'Custom system / automation-heavy solution'].map((option) => (
+                <button
+                    key={option}
+                    onClick={() => handleSelect('websiteComplexity', option)}
+                    className="w-full text-left p-4 rounded-xl border border-gray-200 hover:border-primary hover:bg-blue-50/50 transition-all font-medium text-secondary hover:text-primary"
+                >
+                    {option}
+                </button>
+            ))}
+        </div>
+    </div>
+);
+
+const TimelineStep = ({ handleSelect }: StepProps) => (
+    <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
+        <h3 className="text-xl font-bold text-secondary">When are you looking to start?</h3>
+        <div className="grid grid-cols-1 gap-3">
+            {['ASAP (1–2 weeks)', 'Within 1 month', '1–3 months', 'No fixed timeline'].map((option) => (
+                <button
+                    key={option}
+                    onClick={() => handleSelect('timeline', option)}
+                    className="w-full text-left p-4 rounded-xl border border-gray-200 hover:border-primary hover:bg-blue-50/50 transition-all font-medium text-secondary hover:text-primary"
+                >
+                    {option}
+                </button>
+            ))}
+        </div>
+    </div>
+);
+
+interface ContactStepProps {
+    formData: FormData;
+    setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+    handleSubmit: (e: React.FormEvent) => void;
+}
+
+const ContactStep = ({ formData, setFormData, handleSubmit }: ContactStepProps) => (
+    <form onSubmit={handleSubmit} className="space-y-6 animate-in fade-in slide-in-from-right-4">
+        <h3 className="text-xl font-bold text-secondary">How should we contact you?</h3>
+
+        <Input
+            label="Full Name"
+            placeholder="John Doe"
+            required
+            value={formData.name}
+            onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+        />
+
+        <div className="space-y-3">
+            <label className="block text-sm font-medium text-secondary">Preferred Contact Method</label>
+            <div className="flex gap-4">
+                <button
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, contactMethod: 'email', contactValue: '' }))}
+                    className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border transition-all ${formData.contactMethod === 'email' ? 'border-primary bg-blue-50 text-primary' : 'border-gray-200 hover:bg-gray-50'}`}
+                >
+                    <Mail size={18} /> Email
+                </button>
+                <button
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, contactMethod: 'whatsapp', contactValue: '' }))}
+                    className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border transition-all ${formData.contactMethod === 'whatsapp' ? 'border-primary bg-blue-50 text-primary' : 'border-gray-200 hover:bg-gray-50'}`}
+                >
+                    <Phone size={18} /> WhatsApp
+                </button>
+            </div>
+        </div>
+
+        {formData.contactMethod === 'email' ? (
+            <Input
+                label="Email Address"
+                type="email"
+                placeholder="john@company.com"
+                required
+                value={formData.contactValue}
+                onChange={(e) => setFormData(prev => ({ ...prev, contactValue: e.target.value }))}
+            />
+        ) : (
+            <Input
+                label="WhatsApp Number"
+                type="tel"
+                placeholder="+971 50 123 4567"
+                required
+                value={formData.contactValue}
+                onChange={(e) => setFormData(prev => ({ ...prev, contactValue: e.target.value }))}
+            />
+        )}
+
+        <Button type="submit" className="w-full" size="lg">
+            Submit Request
+        </Button>
+    </form>
+);
+
+const SuccessStep = ({ formData }: { formData: FormData }) => (
+    <div className="text-center space-y-4 py-8 animate-in zoom-in duration-500">
+        <div className="h-16 w-16 bg-green-100 rounded-full flex items-center justify-center mx-auto text-green-600">
+            <CheckCircle size={32} />
+        </div>
+        <h3 className="text-2xl font-bold text-secondary">Request Received!</h3>
+        <p className="text-muted max-w-sm mx-auto">
+            Thanks, {formData.name}. We&apos;ll reach out via {formData.contactMethod === 'whatsapp' ? 'WhatsApp' : 'email'} shortly to discuss your project.
+        </p>
+    </div>
+);
+
+// --- Main Component ---
+
 export function LeadForm() {
-    const [currentStep, setCurrentStep] = useState<Step>('segmentation');
+    const [currentStep, setCurrentStep] = useState<Step>('business-stage');
     const [formData, setFormData] = useState<FormData>({
-        role: '',
-        bottleneck: '',
-        budget: '',
+        businessStage: '',
+        primaryGoal: '',
+        websiteComplexity: '',
+        timeline: '',
         name: '',
-        email: '',
-        website: ''
+        contactMethod: 'email',
+        contactValue: '',
     });
 
     const handleSelect = (field: keyof FormData, value: string) => {
         setFormData(prev => ({ ...prev, [field]: value }));
-        nextStep(field, value);
+        nextStep();
     };
 
-    const nextStep = (field?: keyof FormData, value?: string) => {
-        if (currentStep === 'segmentation') {
-            if (value === 'Student / Other') {
-                setCurrentStep('success-unqualified'); // Immediate disqualify
-            } else {
-                setCurrentStep('pain-point');
-            }
-        } else if (currentStep === 'pain-point') {
-            setCurrentStep('budget');
-        } else if (currentStep === 'budget') {
-            if (value === '< 5,000 AED') {
-                setCurrentStep('success-unqualified'); // Filter low budget
-            } else {
-                setCurrentStep('contact');
-            }
-        } else if (currentStep === 'contact') {
-            setCurrentStep('success-qualified');
-        }
+    const nextStep = () => {
+        if (currentStep === 'business-stage') setCurrentStep('primary-goal');
+        else if (currentStep === 'primary-goal') setCurrentStep('website-complexity');
+        else if (currentStep === 'website-complexity') setCurrentStep('timeline');
+        else if (currentStep === 'timeline') setCurrentStep('contact');
+        else if (currentStep === 'contact') setCurrentStep('success');
     };
 
     const prevStep = () => {
-        if (currentStep === 'pain-point') setCurrentStep('segmentation');
-        if (currentStep === 'budget') setCurrentStep('pain-point');
-        if (currentStep === 'contact') setCurrentStep('budget');
+        if (currentStep === 'primary-goal') setCurrentStep('business-stage');
+        if (currentStep === 'website-complexity') setCurrentStep('primary-goal');
+        if (currentStep === 'timeline') setCurrentStep('website-complexity');
+        if (currentStep === 'contact') setCurrentStep('timeline');
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         // Simulate API call
         setTimeout(() => {
-            setCurrentStep('success-qualified');
+            setCurrentStep('success');
         }, 1000);
     };
 
-    // --- Step Components ---
-
-    const SegmentationStep = () => (
-        <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
-            <h3 className="text-xl font-bold text-secondary">First, what describes you best?</h3>
-            <div className="grid grid-cols-1 gap-3">
-                {['Business Owner / Founder', 'Operations Manager', 'Freelancer / Consultant', 'Student / Other'].map((role) => (
-                    <button
-                        key={role}
-                        onClick={() => handleSelect('role', role)}
-                        className="flex items-center justify-between p-4 rounded-xl border border-gray-200 hover:border-primary hover:bg-blue-50/50 transition-all text-left group"
-                    >
-                        <span className="font-medium text-secondary group-hover:text-primary">{role}</span>
-                        <ChevronLeft className="rotate-180 text-gray-300 group-hover:text-primary" size={20} />
-                    </button>
-                ))}
-            </div>
-        </div>
-    );
-
-    const PainPointStep = () => (
-        <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
-            <h3 className="text-xl font-bold text-secondary">What is your biggest bottleneck?</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {[
-                    { label: 'Manual Repetitive Data', icon: Zap, value: 'Automation' },
-                    { label: 'Website Doesn\'t Convert', icon: Layout, value: 'Web' },
-                    { label: 'Missed Client Messages', icon: MessageSquare, value: 'WhatsApp' },
-                    { label: 'All of the above', icon: Briefcase, value: 'Full Suite' }
-                ].map((item) => (
-                    <button
-                        key={item.value}
-                        onClick={() => handleSelect('bottleneck', item.value)}
-                        className="flex flex-col items-center justify-center p-6 rounded-xl border border-gray-200 hover:border-primary hover:bg-blue-50/50 transition-all text-center gap-3 group h-full"
-                    >
-                        <item.icon className="h-8 w-8 text-muted group-hover:text-primary transition-colors" />
-                        <span className="font-medium text-secondary group-hover:text-primary">{item.label}</span>
-                    </button>
-                ))}
-            </div>
-        </div>
-    );
-
-    const BudgetStep = () => (
-        <div className="space-y-4 animate-in fade-in slide-in-from-right-4">
-            <h3 className="text-xl font-bold text-secondary">Estimated Project Budget?</h3>
-            <p className="text-sm text-muted">This helps us recommend the right package.</p>
-            <div className="space-y-3">
-                {['< 5,000 AED', '5,000 AED - 20,000 AED', '20,000 AED - 75,000 AED', '75,000 AED+'].map((range) => (
-                    <button
-                        key={range}
-                        onClick={() => handleSelect('budget', range)}
-                        className="w-full p-4 rounded-xl border border-gray-200 hover:border-primary hover:bg-blue-50/50 transition-all text-left font-medium text-secondary hover:text-primary"
-                    >
-                        {range}
-                    </button>
-                ))}
-            </div>
-        </div>
-    );
-
-    const ContactStep = () => (
-        <form onSubmit={handleSubmit} className="space-y-4 animate-in fade-in slide-in-from-right-4">
-            <h3 className="text-xl font-bold text-secondary">Great fit. Where should we send the strategy?</h3>
-            <div className="space-y-4">
-                <Input
-                    label="Full Name"
-                    placeholder="John Doe"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                />
-                <Input
-                    label="Work Email"
-                    type="email"
-                    placeholder="john@company.com"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                />
-                <Input
-                    label="Company Website (Optional)"
-                    placeholder="www.company.com"
-                    value={formData.website}
-                    onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-                />
-            </div>
-            <Button type="submit" className="w-full mt-2" size="lg">
-                Book Strategy Call
-            </Button>
-        </form>
-    );
-
-    const SuccessQualified = () => (
-        <div className="text-center space-y-4 py-8 animate-in zoom-in duration-500">
-            <div className="h-16 w-16 bg-green-100 rounded-full flex items-center justify-center mx-auto text-green-600">
-                <CheckCircle size={32} />
-            </div>
-            <h3 className="text-2xl font-bold text-secondary">You're Qualified!</h3>
-            <p className="text-muted max-w-sm mx-auto">
-                Your business is a perfect match for our process. Let's build your roadmap.
-            </p>
-            <div className="p-4 bg-gray-50 rounded-lg border border-gray-100 mt-6">
-                <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-2">Next Step</p>
-                <p className="font-medium text-secondary">Redirecting to Calendar...</p>
-            </div>
-            <Button className="w-full" variant="secondary" onClick={() => window.open('https://cal.com', '_blank')}>
-                Open Calendar Now
-            </Button>
-        </div>
-    );
-
-    const SuccessUnqualified = () => (
-        <div className="text-center space-y-4 py-8 animate-in zoom-in duration-500">
-            <div className="h-16 w-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto text-primary">
-                <Briefcase size={32} />
-            </div>
-            <h3 className="text-2xl font-bold text-secondary">Here are free resources for you</h3>
-            <p className="text-muted max-w-sm mx-auto">
-                Based on your current stage, our "DIY Automation Guide" is the best place to start.
-            </p>
-            <Button className="w-full mt-4" onClick={() => window.location.href = '/resources'}>
-                Get Free Guide
-            </Button>
-        </div>
-    );
+    // Calculate progress percentage
+    const steps: Step[] = ['business-stage', 'primary-goal', 'website-complexity', 'timeline', 'contact'];
+    const currentStepIndex = steps.indexOf(currentStep);
+    const progress = currentStep === 'success' ? 100 : Math.max(10, ((currentStepIndex + 1) / steps.length) * 100);
 
     return (
         <Card className="max-w-xl mx-auto w-full shadow-xl shadow-blue-900/5 border-blue-100">
             <CardHeader className="bg-gray-50/50 border-b-0 pb-0">
                 <div className="flex items-center justify-between mb-2">
-                    <Badge variant="default">Evaluation</Badge>
-                    {currentStep !== 'segmentation' && !currentStep.startsWith('success') && (
+                    <Badge variant="default">Project Inquiry</Badge>
+                    {currentStep !== 'business-stage' && currentStep !== 'success' && (
                         <button onClick={prevStep} className="text-sm text-muted hover:text-secondary flex items-center gap-1">
                             <ChevronLeft size={14} /> Back
                         </button>
@@ -209,23 +237,17 @@ export function LeadForm() {
                 <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                     <div
                         className="h-full bg-primary transition-all duration-500 ease-out"
-                        style={{
-                            width:
-                                currentStep === 'segmentation' ? '10%' :
-                                    currentStep === 'pain-point' ? '35%' :
-                                        currentStep === 'budget' ? '65%' :
-                                            currentStep === 'contact' ? '90%' : '100%'
-                        }}
+                        style={{ width: `${progress}%` }}
                     />
                 </div>
             </CardHeader>
             <CardContent className="pt-6 min-h-[400px]">
-                {currentStep === 'segmentation' && <SegmentationStep />}
-                {currentStep === 'pain-point' && <PainPointStep />}
-                {currentStep === 'budget' && <BudgetStep />}
-                {currentStep === 'contact' && <ContactStep />}
-                {currentStep === 'success-qualified' && <SuccessQualified />}
-                {currentStep === 'success-unqualified' && <SuccessUnqualified />}
+                {currentStep === 'business-stage' && <BusinessStageStep handleSelect={handleSelect} />}
+                {currentStep === 'primary-goal' && <PrimaryGoalStep handleSelect={handleSelect} />}
+                {currentStep === 'website-complexity' && <WebsiteComplexityStep handleSelect={handleSelect} />}
+                {currentStep === 'timeline' && <TimelineStep handleSelect={handleSelect} />}
+                {currentStep === 'contact' && <ContactStep formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} />}
+                {currentStep === 'success' && <SuccessStep formData={formData} />}
             </CardContent>
         </Card>
     );

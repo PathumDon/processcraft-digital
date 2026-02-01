@@ -97,7 +97,7 @@ export function Hero() {
                   <div>
                     <div className="text-xs text-gray-500">Monthly Savings</div>
                     <div className="text-lg font-bold text-secondary">
-                      20,000 AED
+                      5,000 AED
                     </div>
                   </div>
                 </div>
