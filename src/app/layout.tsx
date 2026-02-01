@@ -20,8 +20,6 @@ export const metadata: Metadata = {
   description: "We help Dubai & UAE small businesses grow with SEO-optimized websites, workflow automation, and WhatsApp solutions. Book a free strategy call today.",
 };
 
-
-
 export default function RootLayout({
   children,
 }: Readonly<{
