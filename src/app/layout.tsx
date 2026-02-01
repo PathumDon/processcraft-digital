@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,9 +20,7 @@ export const metadata: Metadata = {
   description: "We help Dubai & UAE small businesses grow with SEO-optimized websites, workflow automation, and WhatsApp solutions. Book a free strategy call today.",
 };
 
-import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 
-// ... imports
 
 export default function RootLayout({
   children,
