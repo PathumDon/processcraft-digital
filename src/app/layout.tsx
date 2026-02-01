@@ -19,6 +19,10 @@ export const metadata: Metadata = {
   description: "We help Dubai & UAE small businesses grow with SEO-optimized websites, workflow automation, and WhatsApp solutions. Book a free strategy call today.",
 };
 
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
+
+// ... imports
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,6 +33,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen scroll-smooth`}
       >
+        <GoogleAnalytics />
         <Navbar />
         <main className="flex-grow">
           {children}
