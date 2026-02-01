@@ -60,46 +60,90 @@ export function Hero() {
           </div>
 
           {/* Right Visual (Placeholder for 3D Illustration) */}
+          {/* Right Visual - Workflow Automation Animation */}
           <div className="relative animate-in fade-in zoom-in duration-1000 delay-200">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-white border border-gray-100 aspect-square md:aspect-[4/3] flex items-center justify-center group">
-              {/* Abstract UI Pattern Placeholder */}
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white opacity-50" />
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-white border border-gray-100 aspect-square md:aspect-[4/3] flex items-center justify-center bg-grid-slate-100">
+              {/* Background Grid Pattern */}
+              <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-white to-blue-50/50" />
 
-              {/* Mockup Elements */}
-              <div className="relative w-3/4 h-3/4 bg-white/80 backdrop-blur-sm rounded-xl border border-gray-200 shadow-xl p-6 flex flex-col gap-4 transform transition-transform group-hover:scale-[1.02] duration-500">
-                <div className="flex items-center justify-between border-b border-gray-100 pb-4">
-                  <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-400" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                    <div className="w-3 h-3 rounded-full bg-green-400" />
+              {/* Central Hub */}
+              <div className="relative z-10 w-64 p-4 bg-white/90 backdrop-blur-md rounded-2xl border border-blue-100 shadow-xl flex flex-col items-center gap-3">
+                <div className="flex items-center gap-2 mb-2 w-full border-b border-gray-50 pb-2">
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
                   </div>
-                  <div className="h-2 w-20 bg-gray-100 rounded-full" />
+                  <div className="text-[10px] uppercase font-bold text-gray-400 tracking-wider ml-auto">Active Workflow</div>
                 </div>
-                <div className="space-y-3">
-                  <div className="h-20 w-full bg-blue-50/50 rounded-lg border border-blue-100 flex items-center justify-center text-blue-400 text-xs">
-                    Workflow Automation Visualization
+
+                {/* Connection Lines */}
+                <div className="absolute top-1/2 left-0 -translate-x-full w-12 h-0.5 bg-gradient-to-r from-transparent to-blue-200" />
+                <div className="absolute top-1/2 right-0 translate-x-full w-12 h-0.5 bg-gradient-to-r from-blue-200 to-transparent" />
+
+                <div className="grid grid-cols-1 w-full gap-2">
+                  {/* Step 1 */}
+                  <div className="flex items-center gap-3 p-2 rounded-lg bg-blue-50/50 border border-blue-100">
+                    <div className="p-1.5 bg-white rounded-md shadow-sm text-blue-500">
+                      <ArrowRight size={14} />
+                    </div>
+                    <div className="flex-1">
+                      <div className="h-1.5 w-16 bg-blue-200 rounded-full mb-1" />
+                      <div className="h-1 w-10 bg-blue-100 rounded-full" />
+                    </div>
+                    <div className="text-[10px] font-bold text-blue-600">New Lead</div>
                   </div>
-                  <div className="h-4 w-full bg-gray-50 rounded" />
-                  <div className="h-4 w-2/3 bg-gray-50 rounded" />
-                  <div className="flex gap-4 mt-2">
-                    <div className="h-12 w-1/3 bg-gray-100 rounded-lg" />
-                    <div className="h-12 w-2/3 bg-blue-600/10 rounded-lg" />
+
+                  {/* Arrow Down */}
+                  <div className="flex justify-center -my-1">
+                    <ArrowRight className="rotate-90 text-gray-300" size={14} />
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className="flex items-center gap-3 p-2 rounded-lg bg-indigo-50/50 border border-indigo-100">
+                    <div className="p-1.5 bg-white rounded-md shadow-sm text-indigo-500">
+                      <CheckCircle size={14} />
+                    </div>
+                    <div className="flex-1">
+                      <div className="h-1.5 w-20 bg-indigo-200 rounded-full mb-1" />
+                      <div className="h-1 w-12 bg-indigo-100 rounded-full" />
+                    </div>
+                    <div className="text-[10px] font-bold text-indigo-600">Qualified</div>
+                  </div>
+
+                  {/* Arrow Down */}
+                  <div className="flex justify-center -my-1">
+                    <ArrowRight className="rotate-90 text-gray-300" size={14} />
+                  </div>
+
+                  {/* Step 3 */}
+                  <div className="flex items-center gap-3 p-2 rounded-lg bg-green-50/50 border border-green-100">
+                    <div className="p-1.5 bg-white rounded-md shadow-sm text-green-500">
+                      <CheckCircle size={14} />
+                    </div>
+                    <div className="flex-1">
+                      <div className="h-1.5 w-14 bg-green-200 rounded-full mb-1" />
+                      <div className="h-1 w-8 bg-green-100 rounded-full" />
+                    </div>
+                    <div className="text-[10px] font-bold text-green-600">Synced</div>
                   </div>
                 </div>
               </div>
 
-              {/* Floating Badge */}
-              <div className="absolute -bottom-6 -right-6 bg-white p-4 rounded-xl shadow-lg border border-gray-100 animate-bounce duration-[3000ms]">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold">
-                    $
-                  </div>
-                  <div>
-                    <div className="text-xs text-gray-500">Monthly Savings</div>
-                    <div className="text-lg font-bold text-secondary">
-                      5,000 AED
-                    </div>
-                  </div>
+              {/* Floating Badges */}
+              <div className="absolute top-10 left-10 p-3 bg-white rounded-xl shadow-lg border border-gray-100 animate-bounce duration-[4000ms]">
+                <div className="h-8 w-8 bg-orange-100 rounded-lg flex items-center justify-center text-orange-500">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+              </div>
+
+              <div className="absolute bottom-10 right-10 p-3 bg-white rounded-xl shadow-lg border border-gray-100 animate-pulse duration-[3000ms]">
+                <div className="flex items-center gap-2">
+                  <div className="h-2 w-2 rounded-full bg-green-500 animate-ping" />
+                  <span className="text-xs font-bold text-gray-600">System Online</span>
                 </div>
               </div>
             </div>
