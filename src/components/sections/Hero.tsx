@@ -1,3 +1,5 @@
+'use client';
+
 import React from "react";
 import { Button } from "@/components/ui/Button";
 import { ArrowRight, CheckCircle } from "lucide-react";
@@ -33,14 +35,14 @@ export function Hero() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
-              <Button size="lg" className="gap-2 group">
+              <Button size="lg" className="gap-2 group" onClick={() => window.location.href = '/contact'}>
                 Book Strategy Call
                 <ArrowRight
                   size={18}
                   className="group-hover:translate-x-1 transition-transform"
                 />
               </Button>
-              <Button variant="secondary" size="lg">
+              <Button variant="secondary" size="lg" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
                 View Validated Results
               </Button>
             </div>
