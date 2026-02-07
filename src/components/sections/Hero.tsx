@@ -42,8 +42,8 @@ export function Hero() {
                   className="group-hover:translate-x-1 transition-transform"
                 />
               </Button>
-              <Button variant="secondary" size="lg" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
-                View Validated Results
+              <Button variant="secondary" size="lg" onClick={() => window.location.href = '/client-onboarding'}>
+                Request a Website Prototype
               </Button>
             </div>
 

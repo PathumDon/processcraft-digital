@@ -26,7 +26,7 @@ export default function ContactPage() {
                                 </div>
                                 <div>
                                     <p className="font-medium text-secondary">Email</p>
-                                    <a href="mailto:hello@processcraft.digital" className="text-muted hover:text-primary transition-colors">hello@processcraft.digital</a>
+                                    <a href="mailto:hello@processcraftdigital.com" className="text-muted hover:text-primary transition-colors">hello@processcraftdigital.com</a>
                                 </div>
                             </div>
                             <div className="flex items-start gap-4">

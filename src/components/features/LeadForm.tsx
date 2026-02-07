@@ -5,7 +5,7 @@ import { Card, CardHeader, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
-import { ChevronLeft, CheckCircle, Mail, Phone, Calendar, Briefcase, Target, Smartphone } from 'lucide-react';
+import { ChevronLeft, CheckCircle, Mail, Phone, Calendar, Briefcase, Target, Smartphone, AlertCircle, Loader2 } from 'lucide-react';
 
 type Step = 'business-stage' | 'primary-goal' | 'website-complexity' | 'timeline' | 'contact' | 'success';
 
@@ -17,6 +17,7 @@ interface FormData {
     name: string;
     contactMethod: 'email' | 'whatsapp';
     contactValue: string;
+    _honey: string; // Honeypot field
 }
 
 // --- Step Components ---
@@ -104,11 +105,24 @@ interface ContactStepProps {
     formData: FormData;
     setFormData: React.Dispatch<React.SetStateAction<FormData>>;
     handleSubmit: (e: React.FormEvent) => void;
+    isSubmitting: boolean;
+    error: string;
 }
 
-const ContactStep = ({ formData, setFormData, handleSubmit }: ContactStepProps) => (
+const ContactStep = ({ formData, setFormData, handleSubmit, isSubmitting, error }: ContactStepProps) => (
     <form onSubmit={handleSubmit} className="space-y-6 animate-in fade-in slide-in-from-right-4">
         <h3 className="text-xl font-bold text-secondary">How should we contact you?</h3>
+
+        {/* Honeypot field */}
+        <input
+            type="text"
+            name="_honey"
+            value={formData._honey}
+            onChange={(e) => setFormData(prev => ({ ...prev, _honey: e.target.value }))}
+            style={{ display: 'none' }}
+            tabIndex={-1}
+            autoComplete="off"
+        />
 
         <Input
             label="Full Name"
@@ -116,6 +130,7 @@ const ContactStep = ({ formData, setFormData, handleSubmit }: ContactStepProps) 
             required
             value={formData.name}
             onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+            disabled={isSubmitting}
         />
 
         <div className="space-y-3">
@@ -125,6 +140,7 @@ const ContactStep = ({ formData, setFormData, handleSubmit }: ContactStepProps) 
                     type="button"
                     onClick={() => setFormData(prev => ({ ...prev, contactMethod: 'email', contactValue: '' }))}
                     className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border transition-all ${formData.contactMethod === 'email' ? 'border-primary bg-blue-50 text-primary' : 'border-gray-200 hover:bg-gray-50'}`}
+                    disabled={isSubmitting}
                 >
                     <Mail size={18} /> Email
                 </button>
@@ -132,6 +148,7 @@ const ContactStep = ({ formData, setFormData, handleSubmit }: ContactStepProps) 
                     type="button"
                     onClick={() => setFormData(prev => ({ ...prev, contactMethod: 'whatsapp', contactValue: '' }))}
                     className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border transition-all ${formData.contactMethod === 'whatsapp' ? 'border-primary bg-blue-50 text-primary' : 'border-gray-200 hover:bg-gray-50'}`}
+                    disabled={isSubmitting}
                 >
                     <Phone size={18} /> WhatsApp
                 </button>
@@ -146,6 +163,7 @@ const ContactStep = ({ formData, setFormData, handleSubmit }: ContactStepProps) 
                 required
                 value={formData.contactValue}
                 onChange={(e) => setFormData(prev => ({ ...prev, contactValue: e.target.value }))}
+                disabled={isSubmitting}
             />
         ) : (
             <Input
@@ -155,11 +173,26 @@ const ContactStep = ({ formData, setFormData, handleSubmit }: ContactStepProps) 
                 required
                 value={formData.contactValue}
                 onChange={(e) => setFormData(prev => ({ ...prev, contactValue: e.target.value }))}
+                disabled={isSubmitting}
             />
         )}
 
-        <Button type="submit" className="w-full" size="lg">
-            Submit Request
+        {error && (
+            <div className="p-3 bg-red-50 text-red-600 rounded-lg flex items-center gap-2 text-sm animate-in slide-in-from-top-1">
+                <AlertCircle size={16} />
+                {error}
+            </div>
+        )}
+
+        <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+            {isSubmitting ? (
+                <>
+                    <Loader2 size={18} className="mr-2 animate-spin" />
+                    Sending...
+                </>
+            ) : (
+                'Submit Request'
+            )}
         </Button>
     </form>
 );
@@ -180,6 +213,8 @@ const SuccessStep = ({ formData }: { formData: FormData }) => (
 
 export function LeadForm() {
     const [currentStep, setCurrentStep] = useState<Step>('business-stage');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState('');
     const [formData, setFormData] = useState<FormData>({
         businessStage: '',
         primaryGoal: '',
@@ -188,7 +223,10 @@ export function LeadForm() {
         name: '',
         contactMethod: 'email',
         contactValue: '',
+        _honey: '',
     });
+
+    const scriptURL = "https://script.google.com/macros/s/AKfycbyW4hvLk8mZ1POe4FLo79KRqepUlTz4vGKA07xThzhDcoYdIO-JFTnM1ZpbSlvcfIrn/exec";
 
     const handleSelect = (field: keyof FormData, value: string) => {
         setFormData(prev => ({ ...prev, [field]: value }));
@@ -210,12 +248,44 @@ export function LeadForm() {
         if (currentStep === 'contact') setCurrentStep('timeline');
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Simulate API call
-        setTimeout(() => {
+
+        // Honeypot check
+        if (formData._honey) {
+            // Fake success for bots
             setCurrentStep('success');
-        }, 1000);
+            return;
+        }
+
+        setIsSubmitting(true);
+        setError('');
+
+        // Prepare form data for submission
+        const data = new FormData();
+        data.append('businessStage', formData.businessStage);
+        data.append('primaryGoal', formData.primaryGoal);
+        data.append('websiteComplexity', formData.websiteComplexity);
+        data.append('timeline', formData.timeline);
+        data.append('name', formData.name);
+        data.append('contactMethod', formData.contactMethod);
+        data.append('contactValue', formData.contactValue);
+        // We do not append _honey
+
+        try {
+            await fetch(scriptURL, {
+                method: 'POST',
+                body: data
+            });
+
+            setCurrentStep('success');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (err) {
+            console.error('Submission error:', err);
+            setError('Something went wrong. Please try again or email us directly.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     // Calculate progress percentage
@@ -229,7 +299,7 @@ export function LeadForm() {
                 <div className="flex items-center justify-between mb-2">
                     <Badge variant="default">Get Started</Badge>
                     {currentStep !== 'business-stage' && currentStep !== 'success' && (
-                        <button onClick={prevStep} className="text-sm text-muted hover:text-secondary flex items-center gap-1">
+                        <button onClick={prevStep} className="text-sm text-muted hover:text-secondary flex items-center gap-1" disabled={isSubmitting}>
                             <ChevronLeft size={14} /> Back
                         </button>
                     )}
@@ -246,7 +316,7 @@ export function LeadForm() {
                 {currentStep === 'primary-goal' && <PrimaryGoalStep handleSelect={handleSelect} />}
                 {currentStep === 'website-complexity' && <WebsiteComplexityStep handleSelect={handleSelect} />}
                 {currentStep === 'timeline' && <TimelineStep handleSelect={handleSelect} />}
-                {currentStep === 'contact' && <ContactStep formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} />}
+                {currentStep === 'contact' && <ContactStep formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} isSubmitting={isSubmitting} error={error} />}
                 {currentStep === 'success' && <SuccessStep formData={formData} />}
             </CardContent>
         </Card>
