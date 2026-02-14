@@ -17,6 +17,7 @@ interface PricingCardProps {
     isPopular?: boolean;
     buttonText?: string;
     onButtonClick?: () => void;
+    className?: string;
 }
 
 export function PricingCard({
@@ -26,10 +27,11 @@ export function PricingCard({
     features,
     isPopular = false,
     buttonText = "Get Started",
-    onButtonClick
+    onButtonClick,
+    className = ""
 }: PricingCardProps) {
     return (
-        <Card className={`h-full hover:shadow-lg hover:shadow-blue-900/5 hover:-translate-y-1 transition-all duration-300 group relative ${isPopular ? 'ring-2 ring-primary border-transparent' : ''}`}>
+        <Card className={`h-full hover:shadow-lg hover:shadow-blue-900/5 hover:-translate-y-1 transition-all duration-300 group relative ${isPopular ? 'ring-2 ring-primary border-transparent' : ''} ${className}`}>
             {isPopular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                     <Badge variant="default" className="bg-primary text-white border-0 px-4 py-1 shadow-md">
@@ -43,7 +45,7 @@ export function PricingCard({
                 <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold text-secondary mb-3">{title}</h3>
                     <div className="flex items-baseline justify-center gap-1 my-4">
-                        <span className="text-sm font-medium text-muted">AED</span>
+                        {price !== "Custom" && <span className="text-sm font-medium text-muted">AED</span>}
                         <span className="text-4xl font-bold text-primary">{price}</span>
                     </div>
                     <p className="text-muted leading-relaxed">
