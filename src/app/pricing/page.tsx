@@ -35,7 +35,7 @@ export default function PricingPage() {
             price: "3,999",
             description: "Ideal for Businesses that want an editable website and ongoing lead capture tools.",
             features: [
-                { text: "High-Speed Landing Page", included: true },
+                { text: "Multi-Page Professional Website", included: true },
                 { text: "Basic SEO Optimization", included: true },
                 { text: "Google Business Profile Setup", included: true },
                 { text: "Full Website with CMS (easy content updates)", included: true },
