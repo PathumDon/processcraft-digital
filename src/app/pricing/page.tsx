@@ -15,7 +15,10 @@ export default function PricingPage() {
     const tiers = [
         {
             title: "Essentials (Starter)",
-            price: "999",
+            price: "299",
+            originalPrice: "999",
+            badgeText: "Intro Offer",
+            promoText: "Introductory Launch Price – Limited Slots!",
             description: "Perfect for New businesses ready to launch an online presence with core essentials.",
             isPopular: true,
             features: [
@@ -29,7 +32,7 @@ export default function PricingPage() {
         },
         {
             title: "Dynamic (Professional)",
-            price: "3,499",
+            price: "3,999",
             description: "Ideal for Businesses that want an editable website and ongoing lead capture tools.",
             features: [
                 { text: "High-Speed Landing Page", included: true },
@@ -103,6 +106,12 @@ export default function PricingPage() {
                             isPopular={tier.isPopular}
                             buttonText={tier.isPopular ? "Get Started" : "Contact Sales"}
                             onButtonClick={() => handlePlanSelect(tier.title)}
+                            // @ts-ignore
+                            originalPrice={tier.originalPrice}
+                            // @ts-ignore
+                            badgeText={tier.badgeText}
+                            // @ts-ignore
+                            promoText={tier.promoText}
                             className={`animate-in slide-in-from-bottom-8 duration-700 fill-mode-both fade-in ${index === 0 ? 'delay-0' :
                                 index === 1 ? 'delay-150' :
                                     'delay-300'

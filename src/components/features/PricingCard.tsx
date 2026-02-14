@@ -18,6 +18,9 @@ interface PricingCardProps {
     buttonText?: string;
     onButtonClick?: () => void;
     className?: string;
+    originalPrice?: string;
+    badgeText?: string;
+    promoText?: string;
 }
 
 export function PricingCard({
@@ -28,14 +31,17 @@ export function PricingCard({
     isPopular = false,
     buttonText = "Get Started",
     onButtonClick,
-    className = ""
+    className = "",
+    originalPrice,
+    badgeText,
+    promoText
 }: PricingCardProps) {
     return (
         <Card className={`h-full hover:shadow-lg hover:shadow-blue-900/5 hover:-translate-y-1 transition-all duration-300 group relative ${isPopular ? 'ring-2 ring-primary border-transparent' : ''} ${className}`}>
             {isPopular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-max">
                     <Badge variant="default" className="bg-primary text-white border-0 px-4 py-1 shadow-md">
-                        Most Popular
+                        {badgeText || "Most Popular"}
                     </Badge>
                 </div>
             )}
@@ -44,10 +50,33 @@ export function PricingCard({
                 {/* Header Section */}
                 <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold text-secondary mb-3">{title}</h3>
-                    <div className="flex items-baseline justify-center gap-1 my-4">
-                        {price !== "Custom" && <span className="text-sm font-medium text-muted">AED</span>}
-                        <span className="text-4xl font-bold text-primary">{price}</span>
+
+                    <div className="flex flex-col items-center justify-center my-4">
+                        <div className="flex items-baseline justify-center gap-2">
+                            {/* Original Price (Crossed Out) */}
+                            {originalPrice && (
+                                <span className="text-lg text-muted/80 line-through decoration-slate-400">
+                                    AED {originalPrice}
+                                </span>
+                            )}
+
+                            {/* Main Price */}
+                            <div className="flex items-baseline gap-1">
+                                {price !== "Custom" && <span className="text-sm font-medium text-muted">AED</span>}
+                                <span className={`text-4xl font-bold ${originalPrice ? 'text-red-600' : 'text-primary'}`}>
+                                    {price}
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Promo Text */}
+                        {promoText && (
+                            <p className="text-xs font-semibold text-red-600 mt-2 bg-red-50 px-2 py-1 rounded-full">
+                                {promoText}
+                            </p>
+                        )}
                     </div>
+
                     <p className="text-muted leading-relaxed">
                         {description}
                     </p>
